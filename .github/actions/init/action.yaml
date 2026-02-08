@@ -1,0 +1,10 @@
+name: deps
+description: Prepares the job with source code and all necessary dependencies
+runs:
+  using: "composite"
+  steps:
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: stable
+        components: rustfmt, clippy

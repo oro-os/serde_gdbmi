@@ -1,0 +1,32 @@
+name: Build and Test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init
+      - run: cargo test --all-features
+  lint-rustfmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init
+      - run: cargo fmt --check
+  lint-clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init
+      - run: cargo clippy --all-features
+  lint-rustdoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/init
+      - run: env RUSTFLAGS="-D warnings" RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
